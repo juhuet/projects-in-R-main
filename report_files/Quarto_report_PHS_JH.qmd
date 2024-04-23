@@ -56,5 +56,5 @@ stacked_column_plot <- ggplot(BSE_data_cumulative, aes(x = Year, y = Cumulative_
 stacked_column_plot + labs(caption = "Cumulative BSE cases from public open data")
 
 ```
-mmm
+mmmmm
 
