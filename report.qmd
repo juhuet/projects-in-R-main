@@ -66,6 +66,6 @@ ggplot(cases, aes(x = datum, y = entries)) +
 
 The number of laboratory-confirmed cases of COVID-19 in Switzerland rapidly increased during October 2020 and subsequently declined.
 
-
+change
 
 
