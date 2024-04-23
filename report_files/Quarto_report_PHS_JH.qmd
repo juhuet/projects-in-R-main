@@ -1,0 +1,59 @@
+---
+title: "Global BSE cases 2003-2023"
+author: "Julia"
+date: "`r date()`"
+format: 
+  html:
+    toc: true
+    code-folding: hide
+
+---
+
+```{r, echo=FALSE}
+#| output: false
+# Load libraries
+library(here)
+library(tidyverse)
+library(lubridate)
+
+```
+## Introduction
+
+Classical BSE cases in selected countries.
+
+## Data
+All data is from public sources.
+
+```{r, echo=FALSE}
+#| output: false
+BSEcases <- read_csv(here("SelectedBSEcases.csv"))
+```
+
+```{r, echo=FALSE}
+# Filter data for years 2003-2022
+BSE_data_filtered <- BSEcases %>%
+  filter(Year >= 2003 & Year <= 2022)
+
+# Create linear plot with countries and BSE cases over years 2003-2022
+ggplot(BSE_data_filtered, aes(x = Year, y = Classical_BSE_cases, color = Country)) +
+  geom_line() +
+  geom_point() +
+  labs(x = "Year", y = "BSE Cases", color = "Country") +
+  theme_minimal()
+
+# Calculate cumulative cases by country and year
+BSE_data_cumulative <- BSE_data_filtered %>%
+  group_by(Year, Country) %>%
+  summarise(Cumulative_Cases = cumsum(Classical_BSE_cases), .groups = "drop")
+
+
+# Create stacked column plot with cumulative BSE cases over years 2003-2022
+stacked_column_plot <- ggplot(BSE_data_cumulative, aes(x = Year, y = Cumulative_Cases, fill = Country)) +
+  geom_col(position = "stack") +
+  labs(x = "Year", y = "Cumulative BSE Cases", fill = "Country") +
+  theme_minimal() 
+# Add a caption below the plot
+stacked_column_plot + labs(caption = "Cumulative BSE cases from public open data")
+
+```
+
